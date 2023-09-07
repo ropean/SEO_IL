@@ -11,5 +11,5 @@ var zbblog = {
     iceEditor: '<?php echo $zbp->CheckPlugin("iceEditor"); ?>',
     tinymce: '<?php echo $zbp->CheckPlugin("my_tinymce"); ?>',
     KindEditor: '<?php echo $zbp->CheckPlugin("KindEditor"); ?>',
-    set:{title:'<?php echo $zbp->Config("SEL_IL")->title; ?>'}
+    set:{title:'<?php echo $zbp->Config("SEO_IL")->title; ?>'}
 }

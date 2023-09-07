@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin version="php">
-<id>SEL_IL</id>
+<id>SEO_IL</id>
 <name>SEO_站内文章引用</name>
-<url>https://ropean.org</url>
-<note>编辑文章时可选择在正文中引入: 最新、随机、热门、热评文章</note>
-<description></description>
-<path></path>
+<url>https://ropean.org/SEO_IL</url>
+<note>可以根据文章分类，结合关键词，通过搜索文章标题、正文，列出指定文章</note>
+<description>插件名称：SEO_站内文章引用
+
+插件功能：
+
+可以根据文章分类，列出最新、热门、热评、随机文章
+可以根据文章分类，结合关键词，通过搜索文章标题、正文，列出指定文章
+一键添加选中链接到编辑器鼠标所在位置
+可以设置标题样式，在添加链接时自动标注
+默认选中：搜索模式，从SEO角度来讲，链接可以更细化
+支持的编辑器：UEditor, Neditor, iceEditor, tinymce, KindEditor
+
+源码已分享在 GitHub： https://github.com/ropean/SEO_IL/
+插件文件结构图：https://ropean.org/zb_users/upload/2023/09/202309072341583086530.png
+</description>
+<path>main.php</path>
 <include>include.php</include>
 <level>1</level>
 <author>
-  <name>Ropean</name>
-  <email>service@ropean.org</email>
+  <name>ropean</name>
+  <email>i9196880@gmail.com</email>
   <url>https://ropean.org</url>
 </author>
 <source>
@@ -18,12 +31,12 @@
   <email></email>
   <url></url>
 </source>
-<adapted>151935</adapted>
-<version>2.0</version>
-<pubdate>2023-09-06</pubdate>
-<modified>2023-09-06</modified>
+<adapted>173290</adapted>
+<version>1.0</version>
+<pubdate>2023-09-08</pubdate>
+<modified>2023-09-08</modified>
 <price>0</price>
-<phpver>5.4</phpver>
+<phpver>5.3</phpver>
 <advanced>
   <dependency></dependency>
   <rewritefunctions></rewritefunctions>

@@ -4,7 +4,7 @@ $(function() {
 
 if (zbblog.UEditor) {
     var edit = [];
-    edit['open'] = 'background: rgba(0, 0, 0, 0) url("' + bloghost + 'zb_users/plugin/SEL_IL/images/btn.bmp") no-repeat center / 16px 16px !important;';
+    edit['open'] = 'background: rgba(0, 0, 0, 0) url("' + bloghost + 'zb_users/plugin/SEO_IL/images/btn.bmp") no-repeat center / 16px 16px !important;';
     UE.registerUI('open', function(editor, uiname) {
         var btn = new UE.ui.Button({
             name: uiname,
@@ -36,7 +36,7 @@ function open_ifarme() {
         shadeClose: true,
         area: ['800px', '600px'],
         fixed: true, //不固定
-        content: [bloghost + 'zb_users/plugin/SEL_IL/pages/main.html', 'no'],
+        content: [bloghost + 'zb_users/plugin/SEO_IL/pages/main.html', 'no'],
         success: function(layero, index) {
             //layer.iframeAuto(index);
         }
@@ -66,7 +66,7 @@ function set() {
         area: ['550px', 'auto'],
         fixed: false, //不固定
         id: 'setForm',
-        content: [bloghost + 'zb_users/plugin/SEL_IL/pages/setting.html', 'no'],
+        content: [bloghost + 'zb_users/plugin/SEO_IL/pages/setting.html', 'no'],
         success: function(layero, index) {
             layer.iframeAuto(index);
         }

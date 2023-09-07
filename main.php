@@ -6,11 +6,11 @@ if (!$zbp->CheckRights($action)) {
     $zbp->ShowError(6);
     die();
 }
-if (!$zbp->CheckPlugin("SEL_IL")) {
+if (!$zbp->CheckPlugin("SEO_IL")) {
     $zbp->ShowError(48);
     die();
 }
-$blogtitle = "SEL_IL";
+$blogtitle = "SEO_IL";
 require $blogpath . "zb_system/admin/admin_header.php";
 require $blogpath . "zb_system/admin/admin_top.php";
 ?>
