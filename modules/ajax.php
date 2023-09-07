@@ -1,5 +1,5 @@
 <?php
-require "../../../zb_system/function/c_system_base.php";
+require "../../../../zb_system/function/c_system_base.php";
 $zbp->load();
 if (!$zbp->CheckRights("root")) {
     die("禁止访问");

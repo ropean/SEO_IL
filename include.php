@@ -24,7 +24,7 @@ function SEL_IL_Edit_Begin()
 function SEL_IL_Admin_Js_Add()
 {
     global $zbp;
-    include ZBP_PATH . "zb_users/plugin/SEO_IL/modules/html2js.php";
+    include ZBP_PATH . "html2js.php";
 }
 function SEL_IL_Cmd_Ajax($src)
 {
