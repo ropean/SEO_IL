@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="utf-8" />
+    <title>form</title>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all" />
+    <style>body { /* width: 95%; */ margin: 10px auto 65px; padding: 10px 0 0; }</style></head>
+  
+  <body>
+    <form class="layui-form" action="">
+      <div class="layui-form-item">
+        <label class="layui-form-label">标题样式</label>
+        <div class="layui-input-block">
+          <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="<blockquote><p>相关推荐</p></blockquote> 留空显示默认" class="layui-input" /></div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button type="submit" class="layui-btn" lay-submit="" lay-filter="save">保存设置</button></div>
+      </div>
+    </form>
+    <script src="layui/layui.js" charset="utf-8"></script>
+    <script>layui.use(["form", "layer"],
+      function() {
+        var $ = layui.$;
+        var form = layui.form;
+        layer = layui.layer;
+        $('input[name="title"]').val(window.parent.zbblog.set.title);
+        form.render("select");
+        form.on("submit(save)",
+        function(data) {
+          var d = JSON.parse(JSON.stringify(data.field));
+          var url = parent.ajaxurl + "setForm";
+          $.ajax({
+            type: "POST",
+            data: {
+              title: encodeURI(d.title),
+              content: encodeURI(d.content),
+            },
+            cache: false,
+            url: url,
+            dataType: "json",
+            success: function(res) {
+              if (res.code == 1) {
+                layer.msg("保存成功");
+              }
+            },
+          });
+          return false;
+        });
+      });</script>
+  </body>
+
+</html>

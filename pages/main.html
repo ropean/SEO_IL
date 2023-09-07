@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="zh-Hans">
+  
+  <head>
+    <meta charset="utf-8" />
+    <title>form</title>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all" />
+    <style type="text/css">
+    body { /* width: 95%; */ margin: 10px; padding: 10px; } 
+    .layui-form-switch{height: 28px; line-height: 28px;padding: 0 5px; margin-top: 0px;} 
+    .layui-form-switch i{top: 7px;}
+    #btnSearch{ height: 30px; line-height: 30px; padding: 0 14px;margin-left: 30px;} 
+    #btnSetting{ padding: 0 5px;height: 30px; line-height: 30px;border-radius: 5px;margin-right: 10px;float: right;} 
+    #btnSetting .layui-icon { margin-right: 0px; }
+    </style>
+    </head>  
+  <body>
+    <form class="layui-form" action="">
+      <div class="layui-form-item clear">
+        <label class="layui-form-label">模式选择</label>
+        <div class="layui-input-block">
+          <input type="checkbox" name="mode" lay-skin="switch" lay-filter="switchx" lay-text="选择模式|搜索模式" checked id="btnSwitch" />
+          <button type="submit" class="layui-btn" lay-submit="" lay-filter="search" id="btnSearch">搜索</button>      
+          <button type="submit" class="layui-btn layui-btn-radius layui-btn-normal" lay-submit="" lay-filter="set" id="btnSetting">
+            <i class="layui-icon layui-icon-set-fill"></i>
+          </button>
+        </div>
+      </div>      
+      <div class="layui-form-item">
+        <label class="layui-form-label">分类选择</label>
+        <div class="layui-input-inline">
+          <select name="cid" lay-filter="cid">
+            <option value="">全部分类</option></select>
+        </div>
+        <label class="layui-form-label" ref="searchScope">搜索范围</label>
+        <div class="layui-input-inline" ref="searchScope">
+          <input type="checkbox" name="title" title="标题" checked />
+          <input type="checkbox" name="content" title="正文" checked />
+        </div>
+        <div class="layui-input-inline" style="display: none" id="articleType">
+          <!-- <label class="layui-form-label">文章类型</label> -->
+          <select name="articleType" lay-filter="articleType">
+            <option value="1">最新文章</option>
+            <option value="2" selected="selected">热门文章</option>
+            <option value="3">热评文章</option>
+            <option value="4">随机文章</option>
+        </select>
+        </div>
+      </div>
+      <div class="layui-form-item" id="dvKeywords">
+        <label class="layui-form-label">关键字</label>
+        <div class="layui-input-inline">
+          <input type="text" name="search" lay-verify="title" autocomplete="off" placeholder="请输入关键字" class="layui-input" /></div>
+      </div>
+    </form>
+    <div id="table">
+        <table class="layui-hide" id="tableSearch" lay-filter="tableSearch"></table>
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" lay-event="push_ue">添加到编辑器</button>
+            </div>
+        </script>
+    </div>
+    <script src="layui/layui.js" charset="utf-8"></script>
+    <script>layui.use(["form", "layer", "table"],
+      function() {
+        var $ = layui.$;
+        var form = layui.form;
+        var table = layui.table;
+        var layer = layui.layer;
+
+        // $('select[name="cateID"]').append(parent.$('#cmbCateID[name="CateID"]').html());
+        parent && parent.$ && $('select[name="cid"]').append(parent.$('#cmbCateID[name="CateID"]').html());
+
+        form.render("select");
+
+        form.on("submit(set)",
+        function(args) {
+            window.parent && window.parent.set && window.parent.set();
+          return false;
+        });
+        
+        form.on("submit(search)",
+        function(data, a,b,c) {
+          var obj = JSON.parse(JSON.stringify(data.field));
+          var paras = ["type=search"];
+          var w = 0;
+
+          paras.push("cid=" + obj.cid);
+
+          if (obj.mode == "on") {
+            if (obj.search == "") {
+              layer.alert("请输入要搜索的内容");
+              return false;
+            } else {
+                paras.push("mode=on"  );
+
+              if (obj.title == "on") {
+                w = w + 1;
+              }
+              if (obj.content == "on") {
+                w = w + 2;
+              }
+
+              paras.push("w=" + w);
+            
+              paras.push("keyword=" + obj.search);
+            }
+          } else {
+            paras.push("mode=off"   );
+            paras.push("ff=" + obj.articleType);
+          }
+
+          table.render({
+            elem: "#tableSearch",
+            toolbar: '#toolbarDemo',
+            defaultToolbar: [],
+            text: {
+              none: "暂无相关数据",
+            },
+            limit: 5,
+            limits: [5, 10],
+            url: parent.bloghost + "zb_users/plugin/SEL_IL/modules/ajax.php?" + paras.join("&"),
+            page: true,
+            cols: [[{
+              type: "checkbox",
+            },
+            {
+              field: "id",
+              width: 80,
+              title: "ID",
+            },
+            {
+              field: "title",
+              title: "文章标题",
+            },
+            {
+              field: "cate",
+              width: 100,
+              title: "文章分类",
+            },
+            {
+              field: "url",
+              width: 50,
+              title: "文章地址",
+              hide: true,
+            },
+            ], ],
+          });
+
+          return false;
+        });
+
+        form.on("switch(switchx)",
+        function(data) {
+          if (this.checked) {
+            $('[ref="searchScope"],#dvKeywords').show();
+            $("#articleType").hide();
+          } else {
+            $('[ref="searchScope"],#dvKeywords').hide();
+            $("#articleType").show();
+          }
+        });
+
+        table.on("toolbar(tableSearch)",
+        function(obj) {
+          var checkStatus = table.checkStatus(obj.config.id);
+          switch (obj.event) {
+          case "push_ue":
+            var data = checkStatus.data;
+            if (data.length == 0) {
+              layer.msg("请选择数据行");
+              return false;
+            }
+            arrdata_html(data);
+            break;
+          case "push_copy":
+            break;
+          }
+          return false;
+        });
+
+        function arrdata_html(data) {
+          //var text = window.parent.zbblog.set.title != '' ? window.parent.zbblog.set.title : '<blockquote><p>' + $('select[name="ff"]').find("option:selected").text() + '推荐</p></blockquote>';
+          var text = window.parent.zbblog.set.title;
+          var html = "";
+          for (i = 0; i < data.length; i++) {
+            //html = html + '<p style="text-indent: 2em;"><a href="' + data[i].url + '" title="' + data[i].title + '" target="_blank">' + data[i].title + '</a></p>'
+            html = html + '<a href="' + data[i].url + '" title="' + data[i].title + '" target="_self">' + data[i].title + "</a>";
+          }
+          if (html != "") {
+            html = text + html;
+            window.parent.push_edit(html);
+            return;
+          }
+          layer.msg("没有获取到内容");
+        }
+      });</script>
+  </body>
+
+</html>
